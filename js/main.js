@@ -48,28 +48,32 @@ app.bg = {
 
 app.common = {
   init: function() {
-    var controller, i, j, ref, results, slides;
-    controller = new ScrollMagic.Controller({
-      globalSceneOptions: {
-        triggerHook: 'onLeave',
-        addIndicators: false
+    $('.section--main .section__content').each(function() {
+      var sectionTextShadow1, sectionTextShadow2, sectionTitle, sectionTitleText;
+      sectionTitle = $(this).find('.section__title');
+      sectionTitleText = sectionTitle.text();
+      sectionTextShadow1 = '<div class="section__textshadow">' + sectionTitleText + '</div>';
+      sectionTextShadow2 = '<div class="section__textshadow">' + sectionTitleText + '</div>';
+      sectionTitle.before(sectionTextShadow1, sectionTextShadow2);
+    });
+    $('.section--header .section__content').each(function() {
+      var sectionTextShadow1, sectionTextShadow2, sectionTitle, sectionTitleText;
+      sectionTitle = $(this).find('.section__title');
+      sectionTitleText = sectionTitle.text();
+      sectionTextShadow1 = '<div class="section__textshadow">' + sectionTitleText + '</div>';
+      sectionTextShadow2 = '<div class="section__textshadow">' + sectionTitleText + '</div>';
+      sectionTitle.before(sectionTextShadow1, sectionTextShadow2);
+    });
+    return $("[event-more-read]").click(function(e) {
+      e.preventDefault();
+      if ($(this).parents(".section__wrap").find(".section__loadmore").hasClass("section__loadmore--show")) {
+        $(this).parents(".section__wrap").find(".section__loadmore").removeClass("section__loadmore--show");
+        return $(this).text("Mostrar más");
+      } else {
+        $(this).parents(".section__wrap").find(".section__loadmore").addClass("section__loadmore--show");
+        return $(this).text("Mostrar menos");
       }
     });
-    slides = document.querySelectorAll('.section--scrolling');
-    results = [];
-    for (i = j = 0, ref = slides.length; 0 <= ref ? j < ref : j > ref; i = 0 <= ref ? ++j : --j) {
-      new ScrollMagic.Scene({
-        triggerElement: slides[i]
-      }).setPin(slides[i], {
-        pushFollowers: false
-      }).addTo(controller);
-      if (app.inMobile = true) {
-        results.push(controller.enabled(false));
-      } else {
-        results.push(void 0);
-      }
-    }
-    return results;
   }
 };
 
@@ -746,10 +750,10 @@ app.slider = {
     });
   },
   create: function(data) {
-    var d, j, len, slider, slides;
+    var d, i, len, slider, slides;
     slides = "";
-    for (j = 0, len = data.length; j < len; j++) {
-      d = data[j];
+    for (i = 0, len = data.length; i < len; i++) {
+      d = data[i];
       slides += "<div class='slide'>" + d + "</div>";
     }
     slider = "<div class='slider slider-cover'>" + slides + "</div>";
@@ -860,7 +864,7 @@ app.swiper = {
           slidesPerGroup: 1
         },
         900: {
-          slidesPerView: 4,
+          slidesPerView: 3,
           spaceBetween: 20,
           slidesPerGroup: 1
         },
